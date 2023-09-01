@@ -9,9 +9,12 @@ let connection = require("./database/dbcon.js");
 // let router = require("./routes/routers.js");
 let router = require("./routes/routes.js");
 
-let app = express(); //creates an Express application
-app.use(bodyParser.json()); //to parse the incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true })); //to parse the incoming request bodies
+let app = express(); // Create an instance of the Express.js application
+app.use(bodyParser.json()); // Middleware: Parse incoming JSON requests and attach the parsed data to the 'req.body' object.
+
+// Middleware: Parse incoming URL-encoded form data and attach the parsed data to the 'req.body' object.
+// The 'extended' option set to 'true' allows for parsing of rich objects and arrays.
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /*    Used to sign the session ID cookie
 
@@ -25,7 +28,9 @@ app.use(
 
 */
 
-app.use("/proj", router); //to use the router
+//use() is used to execute all the incoming requests to the root path,
+// & router is used to group related route handlers together and manage routes for specific paths.
+app.use("/", router); 
 
 app.listen(3000, function () {
   console.log("Server is running"); //to start a UNIX socket and listen for connections on the given path
